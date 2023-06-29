@@ -1,25 +1,59 @@
-import logo from './logo.svg';
+import React, { useState } from "react"; // useState를 import해주는 것 확인
 import './App.css';
 
-function App() {
+const App = () => {
+
+  const [todos, setTodos] = useState([
+    { id: 1, todo: "react를 배워봅시다." },
+    { id: 2, todo: "usestate를 배워봅시다." },
+  ]);
+
+
+  const [todo, setTodo] = useState(''); // 이름
+
+
+  const ChangeHandler = (event) => {
+    setTodo(event.target.value)
+  }
+
+
+  const clickAddBtnHandler = function (event) {
+
+    const newTodo = {
+      id: todos.length + 1,
+      todo,
+    }
+
+    setTodos([...todos, newTodo]);
+    setTodo('') // 초기화
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <div class="container">
+
+        <div class="input">
+          <input
+            value={todo}
+            onChange={(event) => ChangeHandler(event)} />
+
+          <button onClick={clickAddBtnHandler}>추가!</button>
+          <h2>Todo List</h2>
+        </div>
+
+      </div>
+
+
+      <div class="app-style">
+        {todos.map(function (a) {
+          return (
+            <div key={a.id} class="component-style">{a.todo}</div>
+          )
+        })}
+      </div>
+    </>
+
   );
-}
+};
 
 export default App;
